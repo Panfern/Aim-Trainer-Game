@@ -1,5 +1,5 @@
 
-import { getWorldHeight, getWorldWidth } from "./script.js";
+import { getWorldHeight, getWorldWidth } from "./gameLogic.js";
 import { setCustomProperty,getCustomProperty } from "./updateCustomProperty.js";
 
 const crosshairElement = document.querySelector("[data-crosshair]")

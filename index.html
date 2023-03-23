@@ -6,10 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aimbot</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" type="module"></script>
+    <script src="menu.js" type="module"></script>
+    <script src="gameLogic.js" type="module"></script>
+    <script src="crosshair.js" type="module"></script>
+    <script src="target.js" type="module"></script>
   </head>
   <body>
-    <button id="btn-start">Click here to Start</button>
+    <div menu>
+      <button id="btn-start">Click here to Start</button>
+      <button id="btn-settings">Settings</button>
+      <div class="settings-nav" settings-nav>
+        <ul>
+          <li>Mouse Sense X</li>
+          <input id="mouse-x" type="number" value="1" mouse-x >
+          <li>Mouse Sense Y</li>
+          <input id="mouse-y" type="number" value="1" mouse-y>
+        </ul>
+      </div>
+    </div>
     <div class="world" data-world>
       <img src="imgs/target.png" alt="target" class="target" data-target />
       <img src="imgs/crosshair.png" alt="crosshair" class="crosshair" data-crosshair />

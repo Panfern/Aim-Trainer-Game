@@ -2,14 +2,20 @@ import {displayCrosshair, getCrosshairRect, setupCrosshair} from './crosshair.js
 import {getTargetRect, getNewTarget, moveTarget, displayTarget} from './target.js'
 
 
-const btnStart = document.querySelector("#btn-start")
+
 const worldElement = document.querySelector("[data-world]")
-var gameStart=false;
+
+const WORLD_WIDTH = 13
+const WORLD_HEIGHT = 9
+let gameStart=false;
+let consecutiveShotsMissed=0;
 // setupWorld()
+window.addEventListener("resize", setupWorldToEverythingRatio)
 
-btnStart.addEventListener("click",handleStart)
 
-function setupWorld()
+
+
+export function setupWorld()
 {
     document.addEventListener("mousedown",handleFire);
     document.addEventListener("mousemove",mouseMoves);
@@ -20,26 +26,28 @@ function setupWorld()
     displayTarget()
 }
 
-function mouseMoves(e)
-{
-    if(gameStart && document.pointerLockElement)
-        moveTarget(e.movementX,e.movementY);
-}
 
-function handleStart()
-{
-    setupWorld()
-}
+
 
 export function getWorldWidth()
 {
     return worldElement.offsetWidth;
 }
 
+function setupWorldToEverythingRatio(e)
+{
+    setupCrosshair()
+} 
 
 export function getWorldHeight()
 {
     return worldElement.offsetHeight;
+}
+
+function endGame(){
+    document.exitPointerLock();
+    document.removeEventListener("mousedown",handleFire);
+    document.removeEventListener("mousemove",mouseMoves);
 }
 
 function getIntoGame()
@@ -58,15 +66,25 @@ function handleFire()
     const crosshairRect= getCrosshairRect()
     const targetRect= getTargetRect()
     
-    console.log(crosshairRect)
-    console.log(targetRect)
     
     if(isCollision(crosshairRect, targetRect))
     {
+        consecutiveShotsMissed=0;
         getNewTarget()
     }
+    else {
+        consecutiveShotsMissed++;
+    }
     
+    if(consecutiveShotsMissed>=3)
+    {
+        gameStart = false;
+        console.log(`You missed ${consecutiveShotsMissed} shots consecutively`)
+        consecutiveShotsMissed=0;
+        endGame()
+    }
     
+    console.log(consecutiveShotsMissed)
 }
 
 function isCollision(rect1, rect2) {
@@ -76,4 +94,14 @@ function isCollision(rect1, rect2) {
         rect1.right > rect2.left &&
         rect1.bottom > rect2.top
     );
+}
+
+function mouseMoves(e)
+{
+    const mouseSenseX = document.querySelector("#mouse-x").value
+    const mouseSenseY = document.querySelector("[mouse-y]").value
+    const movedXBy = (e.movementX/getWorldWidth())*mouseSenseX*100
+    const movedYBy = (e.movementY/getWorldHeight())*mouseSenseY*100
+    if(gameStart && document.pointerLockElement)
+        moveTarget(movedXBy,movedYBy);
 }

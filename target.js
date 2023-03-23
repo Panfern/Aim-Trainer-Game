@@ -1,11 +1,17 @@
-import { getWorldHeight, getWorldWidth } from './script.js';
+import { getWorldHeight, getWorldWidth } from './gameLogic.js';
 import {setCustomProperty, getCustomProperty, incrementCustomProperty} from './updateCustomProperty.js'
 
 const targetElement = document.querySelector("[data-target]")
+const mouseSenseX = document.querySelector("[mouse-x]")
+const mouseSenseY = document.querySelector("[mouse-y]")
 
 console.log(targetElement)
 
 
+export function translateTarget()
+{
+    
+}
 
 export function displayTarget()
 {
@@ -14,8 +20,10 @@ export function displayTarget()
 
 export function getNewTarget()
 {
-    const leftValue=randomNumberBetween(0, getWorldWidth());
-    const topValue=randomNumberBetween(0, getWorldHeight());
+    const worldHeight = getWorldHeight();
+    const worldWidth = getWorldWidth()
+    const leftValue=(randomNumberBetween(0, worldWidth)/worldWidth)*100;
+    const topValue=(randomNumberBetween(0, worldHeight)/worldHeight)*100;
     setCustomProperty(targetElement,"--left",leftValue);
     setCustomProperty(targetElement,"--top",topValue);
 
