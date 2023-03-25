@@ -4,14 +4,16 @@ import {getTargetRect, getNewTarget, moveTarget, displayTarget} from './target.j
 
 
 const worldElement = document.querySelector("[data-world]")
+const scoreElement = document.querySelector("[data-score]")
 
 const WORLD_WIDTH = 13
 const WORLD_HEIGHT = 9
 let gameStart=false;
 let consecutiveShotsMissed=0;
+let totalShotsMissed=0;
+let score = 0;
 // setupWorld()
 window.addEventListener("resize", setupWorldToEverythingRatio)
-
 
 
 
@@ -22,6 +24,7 @@ export function setupWorld()
     setupCrosshair()
     getIntoGame()
     getNewTarget()
+    addBonusPoints()
     displayCrosshair()
     displayTarget()
 }
@@ -45,9 +48,26 @@ export function getWorldHeight()
 }
 
 function endGame(){
+    gameStart=false
+
+    score=0;
+    updateScore();
+
     document.exitPointerLock();
     document.removeEventListener("mousedown",handleFire);
     document.removeEventListener("mousemove",mouseMoves);
+}
+
+function addBonusPoints()
+{
+    setTimeout(()=>{
+        if(gameStart)
+        {
+            increaseScore(5)
+            addBonusPoints()
+        }
+    },5000)
+    console.log(`Randi ${score}`)
 }
 
 function getIntoGame()
@@ -61,6 +81,17 @@ function getIntoGame()
     }
 }
 
+function updateScore()
+{
+    scoreElement.textContent= `Score ${score}`
+}
+
+function increaseScore(inc=1)
+{
+    score+=inc
+    updateScore()
+}
+
 function handleFire()
 {
     const crosshairRect= getCrosshairRect()
@@ -70,10 +101,12 @@ function handleFire()
     if(isCollision(crosshairRect, targetRect))
     {
         consecutiveShotsMissed=0;
+        increaseScore()
         getNewTarget()
     }
     else {
         consecutiveShotsMissed++;
+        totalShotsMissed++;
     }
     
     if(consecutiveShotsMissed>=3)
@@ -104,4 +137,6 @@ function mouseMoves(e)
     const movedYBy = (e.movementY/getWorldHeight())*mouseSenseY*100
     if(gameStart && document.pointerLockElement)
         moveTarget(movedXBy,movedYBy);
+    if(!document.pointerLockElement)
+        endGame()
 }
