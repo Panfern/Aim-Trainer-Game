@@ -7,10 +7,10 @@ body {
     background-color:#d4d3cc ;
 }
   
-#btn-start {
+/* #btn-start {
     height: 3rem;
     width: 5rem;
-}
+} */
 
 .world {
     overflow: hidden;
@@ -56,3 +56,18 @@ body {
       linear-gradient(to right, #363636 1px, transparent 1px),
       linear-gradient(to bottom, #363636 1px, transparent 1px);
     }
+.navbar-custom{
+    height: 75px;
+    padding:0px;
+}
+
+.navbar-brand{
+    padding-left:10px;
+    font-size: 30px;
+}
+.btn.btn-rounded{
+    border-radius: 17px;
+}
+.btn{
+    margin-left:10px;
+}
