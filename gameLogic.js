@@ -131,10 +131,14 @@ function isCollision(rect1, rect2) {
 
 function mouseMoves(e)
 {
-    const mouseSenseX = document.querySelector("#mouse-x").value
-    const mouseSenseY = document.querySelector("[mouse-y]").value
-    const movedXBy = (e.movementX/getWorldWidth())*mouseSenseX*100
-    const movedYBy = (e.movementY/getWorldHeight())*mouseSenseY*100
+    // const mouseSenseX = document.querySelector("#mouse-x").value
+    // const mouseSenseY = document.querySelector("[mouse-y]").value
+    // const movedXBy = (e.movementX/getWorldWidth())*mouseSenseX*100
+    // const movedYBy = (e.movementY/getWorldHeight())*mouseSenseY*100
+    
+    const movedXBy = (e.movementX/getWorldWidth())*100
+    const movedYBy = (e.movementY/getWorldHeight())*100
+
     if(gameStart && document.pointerLockElement)
         moveTarget(movedXBy,movedYBy);
     if(!document.pointerLockElement)
