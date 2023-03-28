@@ -1,17 +1,9 @@
 import { getWorldHeight, getWorldWidth } from './gameLogic.js';
-import {setCustomProperty, getCustomProperty, incrementCustomProperty} from './updateCustomProperty.js'
+import {setCustomProperty, incrementCustomProperty} from './updateCustomProperty.js'
 
 const targetElement = document.querySelector("[data-target]")
-const mouseSenseX = document.querySelector("[mouse-x]")
-const mouseSenseY = document.querySelector("[mouse-y]")
-
-console.log(targetElement)
 
 
-export function translateTarget()
-{
-    
-}
 
 export function displayTarget()
 {

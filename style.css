@@ -20,6 +20,26 @@ body {
     border: 10px solid black;
 }
 
+.world-background{
+    --left:0;
+    --top:0;
+    position: absolute;
+    height: 500%;
+    width: 500%;
+    transform: translate(-46.99%, -51%);
+
+    top: calc(var(--top)*1%);
+    left: calc(var(--left)*1%);
+
+    background-color: #d4d3cc ;
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, #363636 1px, transparent 1px),
+      linear-gradient(to bottom, #363636 1px, transparent 1px);
+    filter:blur(2px)
+    
+}
+
 .settings-nav {
     visibility: visible;
 }
@@ -55,7 +75,7 @@ body {
     background-image:
       linear-gradient(to right, #363636 1px, transparent 1px),
       linear-gradient(to bottom, #363636 1px, transparent 1px);
-    }
+}
 .navbar-custom{
     height: 75px;
     padding:0px;

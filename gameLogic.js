@@ -1,20 +1,23 @@
 import {displayCrosshair, getCrosshairRect, removeCrosshair, setupCrosshair} from './crosshair.js'
 import {getTargetRect, getNewTarget, moveTarget, displayTarget, removeTarget} from './target.js'
+import { incrementCustomProperty } from './updateCustomProperty.js'
 
 
 
 const worldElement = document.querySelector("[data-world]")
 const scoreElement = document.querySelector("[data-score]")
 const lifeElement = document.querySelector("[data-life]")
+const backgroundElement = document.querySelector("[data-world-back]")
+
 
 const WORLD_WIDTH = 13
 const WORLD_HEIGHT = 9
 let gameStart=false;
 let consecutiveShotsMissed=0;
 let totalShotsMissed=0;
-let remainingLife=3;
+let remainingLife=3;     //"❤️❤️❤️";
+const totalLife=3
 let score = 0;
-// setupWorld()
 window.addEventListener("resize", setupWorldToEverythingRatio)
 
 
@@ -29,6 +32,8 @@ export function setupWorld()
     addBonusPoints()
     displayCrosshair()
     displayTarget()
+    remainingLife=3
+    updateLife()
 }
 
 
@@ -52,7 +57,7 @@ export function getWorldHeight()
 function endGame(){
     gameStart=false
     score=0;
-    remainingLife=3;
+    remainingLife=0;
     totalShotsMissed=0
     updateScore();
     updateLife();    
@@ -92,7 +97,13 @@ function updateScore()
 }
 function updateLife()
 {
-    lifeElement.textContent=`Life: ${remainingLife}`
+    var life=""
+    for(var i=0;i<remainingLife;i++)
+    {
+        life+="❤️";
+    }
+
+    lifeElement.textContent=`Life: ${life}`
 }
 
 function increaseScore(inc=1)
@@ -116,7 +127,7 @@ function handleFire()
     else {
         consecutiveShotsMissed++;
         totalShotsMissed++;
-        remainingLife=3-totalShotsMissed;
+        remainingLife=totalLife-totalShotsMissed;
         updateLife()
     }
     
@@ -140,6 +151,13 @@ function isCollision(rect1, rect2) {
     );
 }
 
+function moveBackground(x,y)
+{
+    console.log(backgroundElement)
+    incrementCustomProperty(backgroundElement,"--left",-x);
+    incrementCustomProperty(backgroundElement,"--top",-y)
+}
+
 function mouseMoves(e)
 {
     const mouseSenseX = document.querySelector("[mouse-x]").value
@@ -151,7 +169,10 @@ function mouseMoves(e)
     // const movedYBy = (e.movementY/getWorldHeight())*100
 
     if(gameStart && document.pointerLockElement)
+    {
         moveTarget(movedXBy,movedYBy);
+        moveBackground(movedXBy,movedYBy);
+    }
     if(!document.pointerLockElement)
         endGame()
 }
