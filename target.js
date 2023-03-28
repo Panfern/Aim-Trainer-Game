@@ -18,6 +18,11 @@ export function displayTarget()
     setCustomProperty(targetElement,"visibility","visible")
 }
 
+export function removeTarget()
+{
+    setCustomProperty(targetElement,"visibility","hidden")
+}
+
 export function getNewTarget()
 {
     const worldHeight = getWorldHeight();

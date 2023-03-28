@@ -1,5 +1,5 @@
-import {displayCrosshair, getCrosshairRect, setupCrosshair} from './crosshair.js'
-import {getTargetRect, getNewTarget, moveTarget, displayTarget} from './target.js'
+import {displayCrosshair, getCrosshairRect, removeCrosshair, setupCrosshair} from './crosshair.js'
+import {getTargetRect, getNewTarget, moveTarget, displayTarget, removeTarget} from './target.js'
 
 
 
@@ -52,9 +52,13 @@ export function getWorldHeight()
 function endGame(){
     gameStart=false
     score=0;
-    updateScore();
     remainingLife=3;
-    updateLife();
+    totalShotsMissed=0
+    updateScore();
+    updateLife();    
+    removeCrosshair();
+    removeTarget()
+
     document.exitPointerLock();
     document.removeEventListener("mousedown",handleFire);
     document.removeEventListener("mousemove",mouseMoves);
@@ -112,11 +116,11 @@ function handleFire()
     else {
         consecutiveShotsMissed++;
         totalShotsMissed++;
-        remainingLife=3-consecutiveShotsMissed;
+        remainingLife=3-totalShotsMissed;
         updateLife()
     }
     
-    if(consecutiveShotsMissed>=3)
+    if(consecutiveShotsMissed>=3 || remainingLife==0)
     {
         gameStart = false;
         console.log(`You missed ${consecutiveShotsMissed} shots consecutively`)
@@ -138,7 +142,7 @@ function isCollision(rect1, rect2) {
 
 function mouseMoves(e)
 {
-    const mouseSenseX = document.querySelector("#mouse-x").value
+    const mouseSenseX = document.querySelector("[mouse-x]").value
     const mouseSenseY = document.querySelector("[mouse-y]").value
     const movedXBy = (e.movementX/getWorldWidth())*mouseSenseX*100
     const movedYBy = (e.movementY/getWorldHeight())*mouseSenseY*100

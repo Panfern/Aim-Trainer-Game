@@ -18,6 +18,10 @@ export function displayCrosshair()
 {
     setCustomProperty(crosshairElement,"visibility","visible")
 }
+export function removeCrosshair()
+{
+    setCustomProperty(crosshairElement,"visibility","hidden")
+}
 
 export function setupCrosshair()
 {
