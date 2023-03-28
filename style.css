@@ -88,3 +88,7 @@ body {
     font-family: 'Russo One', sans-serif;
     right: 0;
   }
+  #life-count{
+    position:absolute;
+    font-family: 'Russo One', sans-serif;
+  }

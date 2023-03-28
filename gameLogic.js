@@ -5,12 +5,14 @@ import {getTargetRect, getNewTarget, moveTarget, displayTarget} from './target.j
 
 const worldElement = document.querySelector("[data-world]")
 const scoreElement = document.querySelector("[data-score]")
+const lifeElement = document.querySelector("[data-life]")
 
 const WORLD_WIDTH = 13
 const WORLD_HEIGHT = 9
 let gameStart=false;
 let consecutiveShotsMissed=0;
 let totalShotsMissed=0;
+let remainingLife=3;
 let score = 0;
 // setupWorld()
 window.addEventListener("resize", setupWorldToEverythingRatio)
@@ -49,10 +51,10 @@ export function getWorldHeight()
 
 function endGame(){
     gameStart=false
-
     score=0;
     updateScore();
-
+    remainingLife=3;
+    updateLife();
     document.exitPointerLock();
     document.removeEventListener("mousedown",handleFire);
     document.removeEventListener("mousemove",mouseMoves);
@@ -67,7 +69,6 @@ function addBonusPoints()
             addBonusPoints()
         }
     },5000)
-    console.log(`Randi ${score}`)
 }
 
 function getIntoGame()
@@ -84,6 +85,10 @@ function getIntoGame()
 function updateScore()
 {
     scoreElement.textContent= `Score ${score}`
+}
+function updateLife()
+{
+    lifeElement.textContent=`Life: ${remainingLife}`
 }
 
 function increaseScore(inc=1)
@@ -107,6 +112,8 @@ function handleFire()
     else {
         consecutiveShotsMissed++;
         totalShotsMissed++;
+        remainingLife=3-consecutiveShotsMissed;
+        updateLife()
     }
     
     if(consecutiveShotsMissed>=3)
