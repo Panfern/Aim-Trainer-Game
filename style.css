@@ -64,6 +64,8 @@ body {
 .navbar-brand{
     padding-left:10px;
     font-size: 30px;
+    font-family: 'Gruppo', cursive;
+    font-family: 'Russo One', sans-serif;
 }
 .btn.btn-rounded{
     border-radius: 17px;
@@ -71,3 +73,18 @@ body {
 .btn{
     margin-left:10px;
 }
+.dropdown-menu{
+    position:absolute;
+    margin-left: -12px;
+}
+.buttons-navbar {
+    position: relative;
+    margin-top: 10px;
+    font-family: 'Russo One', sans-serif;
+    /* margin-right: 10px; */
+  }
+  #data-score{
+    position:absolute;
+    font-family: 'Russo One', sans-serif;
+    right: 0;
+  }
